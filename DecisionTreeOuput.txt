@@ -1,0 +1,69 @@
+
+> # Display the text output from each decision tree. 
+> # You're looking for the tree that minimizes xerror. 
+> # xerror is the relative misclassifica .... [TRUNCATED] 
+
+###### Display the text output from each decision tree: ######
+
+> printcp(MyTree)
+
+Classification tree:
+rpart(formula = payback ~ age + sex + region + income + married + 
+    children + car + save_act + current_act + mortgage, data = trainingSet, 
+    method = "class", control = rpart.control(minsplit = 25, 
+        cp = 0.05))
+
+Variables actually used in tree construction:
+[1] children income   married 
+
+Root node error: 126/274 = 0.45985
+
+n= 274 
+
+       CP nsplit rel error  xerror     xstd
+1 0.13095      0   1.00000 1.00000 0.065474
+2 0.12302      3   0.60317 0.70635 0.061523
+3 0.05000      5   0.35714 0.41270 0.051515
+
+> # Show the result graphically
+> plotcp(MyTree, minline = FALSE)
+
+> #######################################################################
+> ######                     Pruning the tree                      ######
+>  .... [TRUNCATED] 
+
+> #######################################################################
+> ######          Evaluating Classification Accuracy               ######
+>  .... [TRUNCATED] 
+
+> predValidation <- predict(MyTree, validationSet, type="class")
+
+> # Generating Confusion Matrices for the traing and validation sets:
+> cat("\n###### Confusion Matrix for the training set ######\n")
+
+###### Confusion Matrix for the training set ######
+
+> table(Predicted=predTraining,Observed=trainingSet[, 12] )
+         Observed
+Predicted   0   1
+        0 130  27
+        1  18  99
+
+> # trainingSet[, 2] tells R the 2nd column of the dataset has the outcome variable (Survived)
+> # If your outcome variable is in a different column,  .... [TRUNCATED] 
+
+###### Confusion Matrix for the validation set ######
+
+> table(Predicted=predValidation,Observed=validationSet[, 12] )
+         Observed
+Predicted   0   1
+        0 113  29
+        1  33 100
+
+> # validationSet[, 2] tells R the 2nd column of the dataset has the outcome variable (Survived)
+> # If your outcome variable is in a different column .... [TRUNCATED] 
+
+> predRateValidation <- mean(predValidation == validationSet[, 12])
+
+> # This stops R from writing any more to the text output file.
+> sink()
